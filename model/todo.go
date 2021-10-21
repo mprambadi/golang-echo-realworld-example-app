@@ -6,6 +6,7 @@ import (
 
 type Todo struct {
 	gorm.Model
-	Title  string `gorm:"not null"`
-	Status bool
+	Title    string `gorm:"not null"`
+	Status   bool
+	AuthorID uint
 }

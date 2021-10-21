@@ -1,6 +1,9 @@
 package main
 
 import (
+	"net/http"
+
+	"github.com/labstack/echo/v4"
 	"github.com/mprambadi/golang-echo-realworld-example-app/db"
 	"github.com/mprambadi/golang-echo-realworld-example-app/handler"
 	"github.com/mprambadi/golang-echo-realworld-example-app/router"
@@ -30,6 +33,9 @@ func main() {
 	r := router.New()
 
 	r.GET("/swagger/*", echoSwagger.WrapHandler)
+	r.GET("/hello", func(c echo.Context) error {
+		return c.String(http.StatusOK, "asdf")
+	})
 
 	v1 := r.Group("/api")
 

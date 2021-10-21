@@ -34,11 +34,15 @@ func (us *TodoStore) Update(u *model.Todo) error {
 	return us.db.Model(u).Update(u).Error
 }
 
-func (as *TodoStore) ListTodos() ([]model.Todo, error) {
+func (as *TodoStore) List() ([]model.Todo, error) {
 	var todos []model.Todo
 	if err := as.db.Find(&todos).Error; err != nil {
 		return nil, err
 	}
 
 	return todos, nil
+}
+
+func (as *TodoStore) Delete(a *model.Todo) error {
+	return as.db.Delete(a).Error
 }

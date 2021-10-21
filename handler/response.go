@@ -65,6 +65,38 @@ type articleResponse struct {
 	} `json:"author"`
 }
 
+type todoResponse struct {
+	Title  string `json:"title"`
+	Status bool   `json:"status"`
+}
+
+type singleTodoResponse struct {
+	Todo *todoResponse `json:"todo"`
+}
+
+type todoListResponse struct {
+	Todos []*todoResponse `json:"todos"`
+}
+
+func newTodoResponse(c echo.Context, a *model.Todo) *singleTodoResponse {
+	ar := new(todoResponse)
+	ar.Title = a.Title
+	ar.Status = a.Status
+	return &singleTodoResponse{ar}
+}
+
+func newTodoListResponse(todos []model.Todo) *todoListResponse {
+	r := new(todoListResponse)
+	r.Todos = make([]*todoResponse, 0)
+	for _, a := range todos {
+		ar := new(todoResponse)
+		ar.Status = a.Status
+		ar.Title = a.Title
+		r.Todos = append(r.Todos, ar)
+	}
+	return r
+}
+
 type singleArticleResponse struct {
 	Article *articleResponse `json:"article"`
 }

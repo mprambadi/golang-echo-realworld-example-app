@@ -123,6 +123,45 @@ func (r *articleCreateRequest) bind(c echo.Context, a *model.Article) error {
 	return nil
 }
 
+type todoCreateRequest struct {
+	Todo struct {
+		Title  string `json:"title" validate:"required"`
+		Status bool   `json:"status" validate:"required"`
+	} `json:"todo"`
+}
+
+func (r *todoCreateRequest) bind(c echo.Context, a *model.Todo) error {
+	if err := c.Bind(r); err != nil {
+		return err
+	}
+	if err := c.Validate(r); err != nil {
+		return err
+	}
+	a.Title = r.Todo.Title
+	a.Status = r.Todo.Status
+
+	return nil
+}
+
+type todoUpdateRequest struct {
+	Todo struct {
+		Title  string `json:"title"`
+		Status bool   `json:"status"`
+	} `json:"todo"`
+}
+
+func (r *todoUpdateRequest) bind(c echo.Context, a *model.Todo) error {
+	if err := c.Bind(r); err != nil {
+		return err
+	}
+	if err := c.Validate(r); err != nil {
+		return err
+	}
+	a.Title = r.Todo.Title
+	a.Status = r.Todo.Status
+	return nil
+}
+
 type articleUpdateRequest struct {
 	Article struct {
 		Title       string   `json:"title"`

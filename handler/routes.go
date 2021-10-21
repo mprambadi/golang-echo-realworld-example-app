@@ -21,6 +21,13 @@ func (h *Handler) Register(v1 *echo.Group) {
 	profiles.POST("/:username/follow", h.Follow)
 	profiles.DELETE("/:username/follow", h.Unfollow)
 
+	todos := v1.Group("/todos", jwtMiddleware)
+	todos.GET("", h.GetTodoList)
+	todos.GET("/:id", h.GetTodoById)
+	todos.POST("", h.CreateTodo)
+	todos.DELETE("/:id", h.DeleteTodo)
+	todos.PUT("/id", h.UpdateTodo)
+
 	articles := v1.Group("/articles", middleware.JWTWithConfig(
 		middleware.JWTConfig{
 			Skipper: func(c echo.Context) bool {
